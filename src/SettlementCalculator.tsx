@@ -14,13 +14,15 @@ export default function SettlementCalculator() {
     return isFinite(n) ? n : 0;
   };
 
-  // Форматируем числа с точкой в качестве десятичного разделителя
+  // Форматирование: пробелы для тысяч, точка для дробной части
   const fmt = (n: number, max = 2) => {
     const nf = new Intl.NumberFormat('en-US', {
       minimumFractionDigits: 0,
       maximumFractionDigits: max,
     });
-    return nf.format(Number(n.toFixed(max)));
+    return nf
+      .format(Number(n.toFixed(max)))
+      .replace(/,/g, ' '); // заменяем запятые на пробелы
   };
 
   const computed = useMemo(() => {
@@ -128,7 +130,7 @@ export default function SettlementCalculator() {
         </div>
         <textarea readOnly value={message} rows={7} />
         <div className="footer">
-          Подсказки: можно вводить десятичные части через точку или запятую; форматирование чисел — английская локаль (точка как разделитель дробной части).
+          Подсказки: можно вводить десятичные части через точку или запятую; форматирование — пробелы для тысяч и точка для дробной части.
         </div>
       </div>
     </div>
