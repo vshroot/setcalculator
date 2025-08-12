@@ -61,13 +61,14 @@ export default function SettlementCalculator() {
     return { a, r, p, res1, res2 };
   }, [amount2, rate2, feePct]);
 
+  // Сообщение для копирования с подстановкой введённых значений и рассчитанных результатов
   const message2 = useMemo(() => {
-    const { res1, res2, p } = computed2;
+    const { a, r, p, res1, res2 } = computed2;
     return [
       'Amount to be sent:',
       '',
-      `Сумма / курс = ${fmt(res1)}`,
-      `Результат - ${p}% = ${fmt(res2)}`,
+      `${fmt(a)} / ${fmt(r)} = ${fmt(res1)}`,
+      `${fmt(res1)} - ${p}% = ${fmt(res2)}`,
     ].join('\n');
   }, [computed2]);
 
@@ -227,10 +228,10 @@ export default function SettlementCalculator() {
         </div>
         <textarea readOnly value={message2} rows={6} />
         <div className="footer">
-          Формат вывода: 
+          Формат вывода:
           <br/>Amount to be sent:
-          <br/>Сумма / курс = &lt;результат1&gt;
-          <br/>Результат - fee% = &lt;результат2&gt;
+          <br/>{`<сумма> / <курс> = <результат1>`}
+          <br/>{`<результат1> - fee% = <результат2>`}
         </div>
       </div>
     </div>
