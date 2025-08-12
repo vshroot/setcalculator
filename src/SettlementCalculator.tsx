@@ -56,12 +56,13 @@ export default function SettlementCalculator() {
     const a = parseNum(amount2);
     const r = parseNum(rate2);
     const p = parseNum(feePct);
-    const res1 = r > 0 ? a / r : 0;                 // 1) сумма / курс
-    const res2 = res1 - (res1 * p) / 100;           // 2) результат1 - fee%
-    return { a, r, p, res1, res2 };
+    const res1 = r > 0 ? a / r : 0;          // 1) сумма / курс
+    const feeValue = (res1 * p) / 100;       // 2) размер комиссии (Fee)
+    const res2 = res1 - feeValue;            // 3) к отправке после Fee
+    return { a, r, p, res1, feeValue, res2 };
   }, [amount2, rate2, feePct]);
 
-  // Сообщение для копирования с подстановкой введённых значений и рассчитанных результатов
+  // Сообщение для копирования (как просили ранее)
   const message2 = useMemo(() => {
     const { a, r, p, res1, res2 } = computed2;
     return [
@@ -211,10 +212,13 @@ export default function SettlementCalculator() {
           <div className="kpi-value">{fmt(computed2.res1)}</div>
         </div>
         <div className="card">
-          <div className="kpi-title">2) Результат - Fee%</div>
+          <div className="kpi-title">2) Fee</div>
+          <div className="kpi-value">{fmt(computed2.feeValue)}</div>
+        </div>
+        <div className="card">
+          <div className="kpi-title">3) К отправке</div>
           <div className="kpi-value">{fmt(computed2.res2)}</div>
         </div>
-        <div className="card" />
       </div>
 
       {error2 && <div className="error">{error2}</div>}
