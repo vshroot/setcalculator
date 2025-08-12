@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Copy } from 'lucide-react';
 
 export default function SettlementCalculator() {
